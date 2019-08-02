@@ -1,7 +1,0 @@
-# this is a comment
-drop *
-#
-keep nMuon
-keep Muon_*
-#
-keep genWeight
