@@ -7,12 +7,11 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from PhysicsTools.NanoAODTools.postprocessing.tools import * #deltaR, matching etc..
 
 class XMuMuNanoSkimmer(Module):
-  def __init__(self, isMC, era, doSkim=False, useCMVA=False):
+  def __init__(self, isMC, era, doSkim=False):
     self.era = era
     self.isMC = isMC
     self.doSkim = doSkim
-    self.useCMVA = useCMVA
-    self.genJets = []
+    self.genJets = 
     self.writeHistFile=True
 
   def beginJob(self,histFile=None,histDirName=None):
@@ -20,9 +19,9 @@ class XMuMuNanoSkimmer(Module):
     self.h_cutflow_uw = ROOT.TH1F('h_cutflow_uw','h_cutflow_uw', 6, 0, 6)
     self.h_cutflow_w  = ROOT.TH1F('h_cutflow_w', 'h_cutflow_w',  6, 0, 6)
     self.h_cutflow_uw.GetXaxis().SetBinLabel(1,"Cut0:NoSelection")
-    self.h_cutflow_uw.GetXaxis().SetBinLabel(2,"Cut1:>=1LooseMuon")
+    self.h_cutflow_uw.GetXaxis().SetBinLabel(2,"Cut1:>=2LooseMuon")
     self.h_cutflow_w.GetXaxis().SetBinLabel(1,"Cut0:NoSelection")
-    self.h_cutflow_w.GetXaxis().SetBinLabel(2,"Cut1:>=1LooseMuon")
+    self.h_cutflow_w.GetXaxis().SetBinLabel(2,"Cut1:>=2LooseMuon")
 
     self.addObject(self.h_cutflow_uw)
     self.addObject(self.h_cutflow_w)
@@ -67,20 +66,25 @@ class XMuMuNanoSkimmer(Module):
       # Loose selection
       #
       if mu.pt < 20. or abs(mu.eta) > 2.4: continue
-      if mu.mediumId is False: continue
+      if mu.looseId is False: continue
       muonsLoose.append(mu) 
     #
-    # CHECK: AT LEAST 1 Loose muon.
+    # CHECK: AT LEAST 2 Loose muon.
     # Skip event if doSkim=True
     #
-    if len(muonsLoose) < 1:
+    if len(muonsLoose) < 2:
       if self.doSkim: 
         return False
     else:
-      self.RegisterCut("Cut1:>=1LooseMuon",evtweight)
+      self.RegisterCut("Cut1:>=2LooseMuon",evtweight)
 
     return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
-XMuMuNanoSkimmer_2016_mc   = lambda : XMuMuNanoSkimmer(isMC=True, era="2016",doSkim=False) 
-XMuMuNanoSkimmer_2016_data = lambda : XMuMuNanoSkimmer(isMC=False,era="2016",doSkim=True) 
+XMuMuNanoSkimmer_2016_mc_sig   = lambda : XMuMuNanoSkimmer(isMC=True, era="2016",doSkim=False) 
+XMuMuNanoSkimmer_2016_mc_bkgd  = lambda : XMuMuNanoSkimmer(isMC=True, era="2016",doSkim=True) 
+XMuMuNanoSkimmer_2016_data     = lambda : XMuMuNanoSkimmer(isMC=False,era="2016",doSkim=True) 
+
+
+
+
