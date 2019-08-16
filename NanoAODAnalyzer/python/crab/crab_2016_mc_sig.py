@@ -2,8 +2,14 @@ import sys
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
-config.General.requestName     = 'XMuMuPostNanoMC16_Test_v0'
-config.General.workArea        = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
+version="v0"
+
+config.General.requestName     = 'XMuMuPostNanoMC16_Test_'+version
+#
+# Change this PATH where the crab directories are stored
+# Example: config.General.workArea = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
+#
+config.General.workArea        = '/afs/cern.ch/work/n/'
 config.General.transferOutputs = True
 config.General.transferLogs    = True
 
@@ -17,8 +23,7 @@ config.JobType.scriptArgs = [
 'era=2016',
 ]
 config.JobType.inputFiles = [
-'../../scripts/keep_and_drop_branches_input.txt',
-'../../scripts/keep_and_drop_branches_output.txt',
+'../../scripts/keep_and_drop_branches.txt',
 '../ProcessSampleCrab.py',
 '../../../../PhysicsTools/NanoAODTools/scripts/haddnano.py' #hadd nano will not be needed once nano tools are in cmssw
 ]
@@ -30,7 +35,7 @@ config.Data.splitting    = 'FileBased'
 config.Data.unitsPerJob  = 1
 
 config.Data.publication = False
-config.Data.outputDatasetTag = 'XMuMuPostNanoMC16_Test_v0'
+config.Data.outputDatasetTag = 'XMuMuPostNanoMC16_Test_'+version
 config.Data.allowNonValidInputDataset = True
 
 config.JobType.allowUndistributedCMSSW = True
@@ -81,8 +86,8 @@ if __name__ == '__main__':
     secondaryName = secondaryName.replace("Nano1June2019_","")
 
     requestName = primaryName + "_" + secondaryName.replace("PUMoriond17_102X_mcRun2_asymptotic_v7","")
-    requestName = "XZV_" + requestName + "_PostProcv0" 
-    outputDatasetTag = "XZV_" + secondaryName + "_PostProcv0"
+    requestName = "XZV_" + requestName + "_PostProc"+version 
+    outputDatasetTag = "XZV_" + secondaryName + "_PostProc"+version
     print requestName , " | ", outputDatasetTag
 
     config.General.requestName   = requestName

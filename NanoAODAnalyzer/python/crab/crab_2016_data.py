@@ -2,23 +2,28 @@ import sys
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
-config.General.requestName     = 'XMuMuPostNanoData16_Test_v0'
-config.General.workArea        = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
+version="v0"
+
+config.General.requestName     = 'XMuMuPostNanoData16_'+version
+#
+# Change this PATH where the crab directories are stored
+# Example: config.General.workArea = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
+#
+config.General.workArea        = '/afs/cern.ch/work/n/'
 config.General.transferOutputs = True
 config.General.transferLogs    = True
 
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName   = 'PSet.py'
 config.JobType.scriptExe  = 'crab_script.sh'
-config.JobType.maxJobRuntimeMin = 450
+config.JobType.maxJobRuntimeMin = 480
 config.JobType.scriptArgs = [
 'isMC=0',
 'isSig=0',
 'era=2016',
 ]
 config.JobType.inputFiles = [
-'../../scripts/keep_and_drop_branches_input.txt',
-'../../scripts/keep_and_drop_branches_output.txt',
+'../../scripts/keep_and_drop_branches.txt',
 '../ProcessSampleCrab.py',
 '../../../../PhysicsTools/NanoAODTools/scripts/haddnano.py' #hadd nano will not be needed once nano tools are in cmssw
 ]
@@ -30,7 +35,7 @@ config.Data.splitting    = 'FileBased'
 config.Data.unitsPerJob  = 1
 
 config.Data.publication = False
-config.Data.outputDatasetTag = 'XMuMuPostNanoData16_Test_v0'
+config.Data.outputDatasetTag = 'XMuMuPostNanoData16_'+version
 config.Data.allowNonValidInputDataset = True
 
 config.JobType.allowUndistributedCMSSW = True
@@ -74,8 +79,8 @@ if __name__ == '__main__':
     secondaryName = secondaryName.replace("Nano1June2019","Data16NanoAODv5")
     #
     requestName = primaryName + "_" + secondaryName
-    requestName = "XZV_" + requestName + "_PostProcv0" 
-    outputDatasetTag = "XZV_" + secondaryName + "_PostProcv0"
+    requestName = "XMuMu_" + requestName + "_PostProc"+version 
+    outputDatasetTag = "XMuMu_" + secondaryName + "_PostProc"+version
     print requestName , " | ", outputDatasetTag
     config.General.requestName   = requestName
     config.Data.outputDatasetTag = outputDatasetTag 
