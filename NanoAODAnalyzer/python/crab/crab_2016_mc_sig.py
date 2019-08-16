@@ -1,10 +1,12 @@
 import sys
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
-
+#
+# Set version number
+#
 version="v0"
 
-config.General.requestName     = 'XMuMuPostNanoMC16_Test_'+version
+config.General.requestName     = 'XMuMuPostNanoMC16_'+version
 #
 # Change this PATH where the crab directories are stored
 # Example: config.General.workArea = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
@@ -39,7 +41,10 @@ config.Data.outputDatasetTag = 'XMuMuPostNanoMC16_'+version
 config.Data.allowNonValidInputDataset = True
 
 config.JobType.allowUndistributedCMSSW = True
-
+#
+# Change this PATH to the EOS space that you want to store
+# Example: config.Data.outLFNDirBase  = '/store/user/nbinnorj/CRABOUTPUT_XMuMu/'
+#
 config.Data.outLFNDirBase  = '/store/user/nbinnorj/CRABOUTPUT_XMuMu/'
 config.Site.storageSite    = 'T2_CH_CERNBOX'
 
