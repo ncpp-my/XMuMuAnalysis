@@ -11,7 +11,6 @@ class XMuMuNanoSkimmer(Module):
     self.era = era
     self.isMC = isMC
     self.doSkim = doSkim
-    self.genJets = 
     self.writeHistFile=True
 
   def beginJob(self,histFile=None,histDirName=None):
