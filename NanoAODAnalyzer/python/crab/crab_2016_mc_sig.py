@@ -35,7 +35,7 @@ config.Data.splitting    = 'FileBased'
 config.Data.unitsPerJob  = 1
 
 config.Data.publication = False
-config.Data.outputDatasetTag = 'XMuMuPostNanoMC16_Test_'+version
+config.Data.outputDatasetTag = 'XMuMuPostNanoMC16_'+version
 config.Data.allowNonValidInputDataset = True
 
 config.JobType.allowUndistributedCMSSW = True
