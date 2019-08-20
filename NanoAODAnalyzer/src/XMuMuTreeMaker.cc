@@ -109,6 +109,7 @@ void XMuMuTreeMaker::CreateNtupleTree(std::string fileName){
   ntupleTree->Branch("nRecoLightJets",          &b_nRecoLightJets,       "nRecoLightJets/I");
   ntupleTree->Branch("MET_pt",                  &b_MET_pt,               "MET_pt/F");
   ntupleTree->Branch("MET_phi",                 &b_MET_phi,              "MET_phi/F");
+  ntupleTree->Branch("passMETFilters",          &b_passMETFilters,       "passMETFilters/O");
 }
 void XMuMuTreeMaker::StoreNtupleTree(){
   ntupleFile->Write();
@@ -302,6 +303,8 @@ void XMuMuTreeMaker::FillNtupleVariables(){
   
   b_MET_pt  = eventReader->MET_pt;
   b_MET_phi = eventReader->MET_phi;
+
+  b_passMETFilters            = eventReader->passMETFilters;
 }
 void XMuMuTreeMaker::ResetNtupleVariables(){
 
@@ -327,6 +330,7 @@ void XMuMuTreeMaker::ResetNtupleVariables(){
   b_passTrigTightMatch = false;
   b_passTrigHighPtMatch = false;
   b_passTrigger = false;
+  b_passMETFilters = false;
 
   b_nRecoMuons = -9;
 
@@ -353,6 +357,8 @@ void XMuMuTreeMaker::ResetNtupleVariables(){
 
   b_MET_pt = -99.;
   b_MET_phi = -99.;
+
+  b_passMETFilters = false;
 }
 
 XMuMuTreeMaker::~XMuMuTreeMaker(){} 

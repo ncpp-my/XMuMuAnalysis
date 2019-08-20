@@ -81,11 +81,9 @@ namespace XMuMuAnalysis {
 
     bool passTrigTightHLT    = false;
     bool passTrigHighPtHLT   = false;
-
-    bool passTrigTightMatch    = false;
-    bool passTrigHighPtMatch   = false;
-
-    bool passTrigger        = false;
+    bool passTrigTightMatch  = false;
+    bool passTrigHighPtMatch = false;
+    bool passTrigger         = false;
 
     bool HLT_IsoMu24 = false;
     bool HLT_IsoTkMu24 = false;
@@ -93,6 +91,16 @@ namespace XMuMuAnalysis {
     bool HLT_IsoTkMu27 = false;
     bool HLT_Mu50   = false;
     bool HLT_TkMu50 = false;
+
+    bool Flag_goodVertices = false;
+    bool Flag_globalSuperTightHalo2016Filter = false;
+    bool Flag_HBHENoiseFilter = false;
+    bool Flag_HBHENoiseIsoFilter = false;
+    bool Flag_EcalDeadCellTriggerPrimitiveFilter = false;
+    bool Flag_BadPFMuonFilter = false;
+    bool Flag_eeBadScFilter = false;
+
+    bool passMETFilters     = false;
 
     TLorentzVector tlv_MuMu;
     TLorentzVector tlv_MuMu_Mu0;

@@ -128,6 +128,8 @@ namespace XMuMuAnalysis {
     Float_t   b_MET_pt;
     Float_t   b_MET_phi;
 
+    Bool_t    b_passMETFilters;
+
     XMuMuTreeMaker(TChain*, TChain*, TChain*, bool, bool, bool, std::string, bool);
     void CreateNtupleTree(std::string fileName);
     void StoreNtupleTree();

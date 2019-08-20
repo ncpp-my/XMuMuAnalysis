@@ -28,6 +28,21 @@ EventReader::EventReader(TChain* t, bool mc, std::string era, bool isSig, bool d
   InitBranch(tree, "HLT_IsoTkMu27", HLT_IsoTkMu27);
   InitBranch(tree, "HLT_Mu50",      HLT_Mu50);
   InitBranch(tree, "HLT_TkMu50",    HLT_TkMu50);
+  //
+  //
+  // https://twiki.cern.ch/twiki/bin/view/CMS/MissingETOptionalFiltersRun2#2018_data
+  // https://twiki.cern.ch/twiki/bin/view/CMS/MissingETOptionalFiltersRun2#2016_data
+  // https://twiki.cern.ch/twiki/bin/view/CMS/MissingETOptionalFiltersRun2#2017_data
+  //
+  //
+  // 
+  InitBranch(tree,"Flag_goodVertices",                       Flag_goodVertices);//2016
+  InitBranch(tree,"Flag_globalSuperTightHalo2016Filter",     Flag_globalSuperTightHalo2016Filter);//2016
+  InitBranch(tree,"Flag_HBHENoiseFilter",                    Flag_HBHENoiseFilter);//2016
+  InitBranch(tree,"Flag_HBHENoiseIsoFilter",                 Flag_HBHENoiseIsoFilter);//2016
+  InitBranch(tree,"Flag_EcalDeadCellTriggerPrimitiveFilter", Flag_EcalDeadCellTriggerPrimitiveFilter);//2016
+  InitBranch(tree,"Flag_BadPFMuonFilter",                    Flag_BadPFMuonFilter);//2016
+  InitBranch(tree,"Flag_eeBadScFilter",                      Flag_eeBadScFilter);//2016
 
   std::cout << "EventReader::EventReader() Initialize objects" << std::endl;
   
@@ -105,6 +120,7 @@ bool EventReader::LoadEventFromTTree(int e)
   passTrigTightMatch  = false;
   passTrigHighPtMatch = false;
   passTrigger         = false;
+  passMETFilters      = false;
 
   tlv_MuMu          = TLorentzVector();
   tlv_MuMu_Mu0      = TLorentzVector();
@@ -332,6 +348,19 @@ bool EventReader::ConstructEventHypothesis()
   //##############################################################
   MET_pt  = readerMET->pt;
   MET_phi = readerMET->phi;
+  //
+  // Assume event passMETFilters
+  //
+  passMETFilters = true;
+  if(eraName=="2016"){
+    passMETFilters &= Flag_goodVertices;
+    passMETFilters &= Flag_globalSuperTightHalo2016Filter;
+    passMETFilters &= Flag_HBHENoiseFilter;
+    passMETFilters &= Flag_HBHENoiseIsoFilter;
+    passMETFilters &= Flag_EcalDeadCellTriggerPrimitiveFilter;
+    passMETFilters &= Flag_BadPFMuonFilter;
+    passMETFilters &= Flag_eeBadScFilter;
+  }
 
   return true;
 }
