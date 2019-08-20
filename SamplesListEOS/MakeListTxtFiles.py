@@ -3,7 +3,7 @@ import glob
 import collections
 
 EOSUSERXROOTD="root://eosuser.cern.ch/"
-EOSUSERDIR="/eos/user/z/zzolkapl/CRABOUTPUT_XMuMu"
+EOSUSERDIR="/eos/user/z/zzolkapl/CRABOUTPUT_XMuMu/"
 
 def main():
 

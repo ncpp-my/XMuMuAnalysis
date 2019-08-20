@@ -11,7 +11,7 @@ config.General.requestName     = 'XMuMuPostNanoData16_'+version
 # Change this PATH where the crab directories are stored
 # Example: config.General.workArea = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
 #
-config.General.workArea        = '/afs/cern.ch/work/n/'
+config.General.workArea        = '/afs/cern.ch/work/n/nbinnorj/private/crab_projects_4/'
 config.General.transferOutputs = True
 config.General.transferLogs    = True
 
