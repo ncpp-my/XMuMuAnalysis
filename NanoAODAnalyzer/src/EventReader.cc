@@ -192,6 +192,8 @@ bool EventReader::ConstructEventHypothesis()
   }
   // MuMu must be opposite sign
   passMuMu = passMuMu && oppSign;
+  // MuMu mass must be more than 70.
+  passMuMu = passMuMu && (tlv_MuMu.M() > 70.);
 
   //
   // Check if muons passes "Tight" criteria
