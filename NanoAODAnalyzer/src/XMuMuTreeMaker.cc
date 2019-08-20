@@ -209,6 +209,7 @@ bool XMuMuTreeMaker::ProcessEvent(){
       return false;
     }
   }
+  if(debug) std::cout << "ProcessEvent end" << std::endl;
   return true;
 }
 void XMuMuTreeMaker::Monitor(long int e){

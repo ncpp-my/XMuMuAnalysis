@@ -100,13 +100,6 @@ bool EventReader::LoadEventFromTTree(int e)
   passTrigHighPtMatch = false;
   passTrigger         = false;
 
-  HLT_IsoMu24        = false;
-  HLT_IsoTkMu24      = false;
-  HLT_IsoMu27        = false;
-  HLT_IsoTkMu27      = false;
-  HLT_Mu50           = false;
-  HLT_TkMu50         = false;
-
   tlv_MuMu          = TLorentzVector();
   tlv_MuMu_Mu0      = TLorentzVector();
   tlv_MuMu_Mu1      = TLorentzVector();
@@ -129,14 +122,20 @@ bool EventReader::PassPreselection()
   //
   // Must have at least one PV
   //
-  if(nPVsGood < 1 && !isSignal) return false;
+  if(nPVsGood < 1 && !isSignal) {
+    if(debug) std::cout<<"Fail nPVsGood. nPVsGood = "<< nPVsGood <<std::endl;
+    return false;
+  }
   // 
   // Pass any of the single-muon triggers
   //
   if(eraName=="2016"){
     passPreselTriggers = HLT_IsoMu24 || HLT_IsoTkMu24 || HLT_Mu50 || HLT_TkMu50;
   }
-  if (!passPreselTriggers && !isSignal) return false;
+  if (!passPreselTriggers && !isSignal) {
+    if(debug) std::cout<<"Fail passPreselTriggers. passPreselTriggers = "<< passPreselTriggers <<std::endl;
+    return false;
+  }
   // 
   // Pass >=2 muons multiplicity requirement
   //
