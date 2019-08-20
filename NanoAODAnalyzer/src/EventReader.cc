@@ -30,8 +30,14 @@ EventReader::EventReader(TChain* t, bool mc, std::string era, bool isSig, bool d
   InitBranch(tree, "HLT_TkMu50",    HLT_TkMu50);
 
   std::cout << "EventReader::EventReader() Initialize objects" << std::endl;
+  
+  //
+  // Turn-off rochester corrections now
+  // Seems that the analysis don't use this.
+  //
+  bool doRoccorForMuons = false; 
 
-  readerMuons       = new RecoMuonReader("Muon",        tree, isMC, eraName);
+  readerMuons       = new RecoMuonReader("Muon",        tree, isMC, eraName,doRoccorForMuons);
   readerJets        = new RecoJetReader("Jet",          tree, isMC, eraName);
   readerMET         = new RecoMETReader("MET",          tree, isMC, eraName);
   readerTrigObjects = new TrigObjectReader("TrigObj",   tree);
@@ -217,11 +223,11 @@ bool EventReader::ConstructEventHypothesis()
     //
     passMuMuHighPtIdIso &= muon0->p4.Pt() > 53.;
     passMuMuHighPtIdIso &= abs(muon0->p4.Eta()) < 2.4;
-    passMuMuHighPtIdIso &= muon0->pfRelIso04_all < 0.25; 
+    passMuMuHighPtIdIso &= muon0->tkRelIso < 0.1; 
     //
     passMuMuHighPtIdIso &= muon1->p4.Pt() > 53.;
     passMuMuHighPtIdIso &= abs(muon1->p4.Eta()) < 2.4;
-    passMuMuHighPtIdIso &= muon1->pfRelIso04_all < 0.25; 
+    passMuMuHighPtIdIso &= muon1->tkRelIso< 0.1; 
   }
 
   if(debug) std::cout<<"Done XMuMu Reconstruction"<<std::endl;
