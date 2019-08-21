@@ -1,6 +1,5 @@
 # XMuMuAnalysis
 
-
 ## Setting up framework
 ### 0. Setup CMSSW for the first time
 
@@ -25,7 +24,13 @@ cmsenv
 git clone git@github.com:ncpp-my/XMuMuAnalysis.git XMuMuAnalysis
 ```
 
-### 2. Checkout NanoAOD-Tools
+### 2. Checkout framework which the parent NanoAODAnalysis framework
+
+```bash
+git clone git@github.com:nurfikri89/NanoAODAnalysis.git 
+```
+
+### 3. Checkout NanoAOD-Tools
 
 Get NanoAODTools framework
 
@@ -36,7 +41,7 @@ git clone git@github.com:cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 
 Instruction from to https://github.com/cms-nanoAOD/nanoAOD-tools#checkout-instructions-cmssw
 
-### 3. Compile
+### 4. Compile
 
 ```bash
 scram b -j 4
