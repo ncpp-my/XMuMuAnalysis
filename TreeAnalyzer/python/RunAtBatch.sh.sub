@@ -1,0 +1,23 @@
+executable            = RunAtBatch.sh
+universe              = vanilla
+output                = BatchLog/NtupProc.$(GROUP).$(ClusterId).$(ProcId).out
+error                 = BatchLog/NtupProc.$(GROUP).$(ClusterId).$(ProcId).err
+log                   = BatchLog/NtupProc.$(ClusterId).log
+stream_output         = True
+stream_error          = True
+#+JobFlavour          = "espresso"
++JobFlavour           = "microcentury"
+#+JobFlavour          = "longlunch"
+#+JobFlavour          = "workday"
+request_cpus          = 4
+
+arguments = $(GROUP)
+
+queue GROUP from (
+All
+#Signal
+#Top
+#VV
+#DYLL
+#Data
+)
