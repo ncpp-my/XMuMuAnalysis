@@ -7,7 +7,7 @@ from collections import OrderedDict
 ROOT.gROOT.SetBatch()
 ROOT.gROOT.LoadMacro("Helpers.C")
 ROOT.gROOT.LoadMacro("../plotting/Helpers_Vars.h")
-ROOT.ROOT.EnableImplicitMT(4)
+ROOT.ROOT.EnableImplicitMT(16)
 
 #
 # Only on lxplus7
@@ -31,7 +31,22 @@ def main():
   
   if groupName == "Top" or groupName == "All":
     sampleNames += [
-      "MC16_TTJets_DiLept",
+      "MC16_TT_2L_PW",
+      "MC16_TT_1L_PW",
+      "MC16_ST_tW_antitop",
+      "MC16_ST_tW_top",
+      "MC16_ST_t-channel_antitop",
+      "MC16_ST_t-channel_top",
+      "MC16_ST_s-channel",
+    ]
+  if groupName == "VV" or groupName == "All":
+    sampleNames += [
+      "MC16_WZTo2L2Q",
+      "MC16_ZZTo2L2Q",
+      "MC16_ZZTo2L2Nu",
+      "MC16_ZZTo4L",
+      "MC16_WZTo3LNu",
+      "MC16_WWTo2L2Nu",
     ]
   if groupName == "DYLL" or groupName == "All":
     sampleNames += [
@@ -47,7 +62,6 @@ def main():
       "Data16G_SingleMuon",
       "Data16H_SingleMuon",
     ]
-
   #
   #
   #

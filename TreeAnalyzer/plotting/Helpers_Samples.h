@@ -50,13 +50,13 @@ map<string, Sample*> GetMapOfSamples()
   MC2016_TOP->legend   = "t#bar{t}/t";
   MC2016_TOP->color    = kOrange;
   MC2016_TOP->subsamples = {
-    "MC16_TTJets_DiLept",
-    // "MC16_TTJets_SingleLept",
-    // "MC16_ST_s-chan",
-    // "MC16_ST_t-chan_antitop",
-    // "MC16_ST_t-chan_top",
-    // "MC16_ST_tW_antitop",
-    // "MC16_ST_tW_top",
+    "MC16_TT_2L_PW",
+    "MC16_TT_1L_PW",
+    "MC16_ST_s-channel",
+    "MC16_ST_t-channel_antitop",
+    "MC16_ST_t-channel_top",
+    "MC16_ST_tW_antitop",
+    "MC16_ST_tW_top",
   };
   //
   //
@@ -97,9 +97,6 @@ map<string, Sample*> GetMapOfSamples()
     "MC16_WZTo2L2Q",
     "MC16_ZZTo2L2Q",
     "MC16_WWTo2L2Nu",
-    "MC16_WWToLNuQQ",
-    "MC16_WZTo1L1Nu2Q",
-    "MC16_WZTo2Q2Nu",
     "MC16_WZTo3LNu",
     "MC16_ZZTo2L2Nu",
     "MC16_ZZTo4L",
@@ -113,7 +110,7 @@ map<string, Sample*> GetMapOfSamples()
   samples["MC16_TOP"]  = MC2016_TOP;
   // samples["MC16_TT"]   = MC2016_TT;
   // samples["MC16_ST"]   = MC2016_ST;
-  // samples["MC16_VV"]   = MC2016_VV;
+  samples["MC16_VV"]   = MC2016_VV;
 
   return samples;
 }

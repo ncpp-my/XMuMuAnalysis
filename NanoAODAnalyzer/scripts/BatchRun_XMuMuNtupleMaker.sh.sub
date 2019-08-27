@@ -9,13 +9,32 @@ stream_error  = True
 +JobFlavour   = "microcentury"
 arguments = $(SAMPLE) $(SAMPLEXSEC) $(CFG)
 queue SAMPLE SAMPLEXSEC CFG from ( 
-MC16_DYLL              MC16_DYLL              ProcNanoAODSkim_MC2016_cfg.py
-MC16_TTJets_DiLept     MC16_TTJets_DiLept     ProcNanoAODSkim_MC2016_cfg.py
-Data16B_SingleMuon     Data16B_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
-Data16C_SingleMuon     Data16C_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
-Data16D_SingleMuon     Data16D_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
-Data16E_SingleMuon     Data16E_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
-Data16F_SingleMuon     Data16F_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
-Data16G_SingleMuon     Data16G_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
-Data16H_SingleMuon     Data16H_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#MC16_TT_2L            MC16_TT_2L      ProcNanoAODSkim_MC2016_cfg.py
+#MC16_TT_2L_PW         MC16_TT_2L_PW   ProcNanoAODSkim_MC2016_cfg.py
+#MC16_TT_1L_PW         MC16_TT_1L_PW   ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ST_tW_antitop        MC16_ST_tW_antitop        ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ST_tW_top            MC16_ST_tW_top            ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ST_t-channel_antitop MC16_ST_t-channel_antitop ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ST_t-channel_top     MC16_ST_t-channel_top     ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ST_s-channel         MC16_ST_s-channel         ProcNanoAODSkim_MC2016_cfg.py
+#MC16_WZTo2L2Q         MC16_WZTo2L2Q   ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ZZTo2L2Q         MC16_ZZTo2L2Q   ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ZZTo2L2Nu        MC16_ZZTo2L2Nu  ProcNanoAODSkim_MC2016_cfg.py
+#MC16_ZZTo4L           MC16_ZZTo4L     ProcNanoAODSkim_MC2016_cfg.py
+#MC16_WZTo3LNu         MC16_WZTo3LNu   ProcNanoAODSkim_MC2016_cfg.py
+#MC16_WWTo2L2Nu        MC16_WWTo2L2Nu  ProcNanoAODSkim_MC2016_cfg.py
+#Data16B_SingleMuon     Data16B_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#Data16C_SingleMuon     Data16C_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#Data16D_SingleMuon     Data16D_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#Data16E_SingleMuon     Data16E_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#Data16F_SingleMuon     Data16F_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#Data16G_SingleMuon     Data16G_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
+#Data16H_SingleMuon     Data16H_SingleMuon     ProcNanoAODSkim_Data2016_cfg.py
 )
+
++JobFlavour   = "longlunch"
+arguments = $(SAMPLE) $(SAMPLEXSEC) $(CFG)
+queue SAMPLE SAMPLEXSEC CFG from ( 
+#MC16_DYLL              MC16_DYLL              ProcNanoAODSkim_MC2016_cfg.py
+)
+

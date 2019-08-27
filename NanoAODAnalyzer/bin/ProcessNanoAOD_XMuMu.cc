@@ -150,7 +150,26 @@ float GetMCXS(std::string sampleName){
   m_sampleXS["MC16_DYLL"] = 4895;      
   //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO#Top_quark_pair_cross_sections_at  
   //BR for W-boson from PDG(2018)
-  m_sampleXS["MC16_TTJets_DiLept"] = 831.76*(3*0.1086)*(3*0.1086);               
+  m_sampleXS["MC16_TT_2L"]    = 831.76*(3*0.1086)*(3*0.1086);   
+  m_sampleXS["MC16_TT_2L_PW"] = 831.76*(3*0.1086)*(3*0.1086);              
+  m_sampleXS["MC16_TT_1L_PW"] = 831.76*2*(3*0.1086*0.6741); 
+  //https://cms-gen-dev.cern.ch/xsdb/?searchQuery=DAS=ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1
+  //https://cms-gen-dev.cern.ch/xsdb/?searchQuery=DAS=ST_tW_top_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1
+  m_sampleXS["MC16_ST_tW_antitop"]            = 38.06;
+  m_sampleXS["MC16_ST_tW_top"]                = 38.09;
+  //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec#Single_top_t_channel_cross_secti
+  m_sampleXS["MC16_ST_t-channel_antitop"]     = 80.95;
+  m_sampleXS["MC16_ST_t-channel_top"]         = 136.02;
+  //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec#Single_top_s_channel_cross_secti
+  m_sampleXS["MC16_ST_s-channel"]             = 10.32*(3*0.1086);
+  //https://github.com/jkarancs/B2GTTrees/blob/master/test/crab3/cross_sections.txt
+  //https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns
+  m_sampleXS["MC16_WZTo2L2Q"]     = 5.595; 
+  m_sampleXS["MC16_ZZTo2L2Q"]     = 3.22;
+  m_sampleXS["MC16_WWTo2L2Nu"]    = 12.178;
+  m_sampleXS["MC16_WZTo3LNu"]     = 4.430; 
+  m_sampleXS["MC16_ZZTo2L2Nu"]    = 0.564;
+  m_sampleXS["MC16_ZZTo4L"]       = 1.212;
 
   float xsec = 1.0;
   if ( m_sampleXS.find(sampleName) == m_sampleXS.end() ) {

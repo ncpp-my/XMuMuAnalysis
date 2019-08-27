@@ -105,7 +105,7 @@ void DataMC(string cutLevel="mumu_passPresel", string variableName="zcand_pt")
   vector<string> bkgdNames;
   bkgdNames.push_back("MC16_DYLL"); 
   bkgdNames.push_back("MC16_TOP");
-  // bkgdNames.push_back("MC16_VV"); 
+  bkgdNames.push_back("MC16_VV"); 
 
 
   THStack* stack_bkgd = new THStack("stack_bkgd","");
@@ -289,6 +289,7 @@ void DataMC(string cutLevel="mumu_passPresel", string variableName="zcand_pt")
   }
 
   pad1->Update();
+  canv->Update();
   //
   // Info on Canvas
   //
