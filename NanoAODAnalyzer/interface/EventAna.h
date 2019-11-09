@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#if !defined(EventReader_H)
-#define EventReader_H
+#if !defined(EventAna_H)
+#define EventAna_H
 
 #include <iostream>
 
@@ -8,6 +8,7 @@
 #include <TFile.h>
 #include <TLorentzVector.h>
 #include "NanoAODAnalysis/NanoAODAnalyzer/interface/InitBranch.h"
+#include "NanoAODAnalysis/NanoAODAnalyzer/interface/EventReader.h"
 #include "NanoAODAnalysis/NanoAODAnalyzer/interface/RecoMuonReader.h"
 #include "NanoAODAnalysis/NanoAODAnalyzer/interface/RecoJetReader.h"
 #include "NanoAODAnalysis/NanoAODAnalyzer/interface/RecoMETReader.h"
@@ -19,7 +20,7 @@ using namespace NanoAODAnalysis;
 
 namespace XMuMuAnalysis {
 
-  class EventReader {
+  class EventAna {
 
   public:
     // Member variables
@@ -35,9 +36,11 @@ namespace XMuMuAnalysis {
     Int_t     nPVs      =  0;
     Int_t     nPVsGood  =  0;
     Float_t   genWeight =  1.0;
+    Float_t   Pileup_nTrueInt = 0.0;
 
     Float_t   evtWeight =  1.0;
 
+    EventReader*         readerEvent;
     RecoMuonReader*      readerMuons;
     RecoJetReader*       readerJets;
     RecoMETReader*       readerMET;
@@ -120,14 +123,14 @@ namespace XMuMuAnalysis {
     const float trigMatchDR = 0.15;
 
     // Constructors and member functions
-    EventReader(TChain*, bool, std::string, bool, bool); 
+    EventAna(TChain*, bool, std::string, bool, bool); 
     bool LoadEventFromTTree(int);
     bool PassPreselection();
     bool ConstructEventHypothesis();
     void GetGenParticlesForSignalEvents();
     void LoadEvent(int e);
 
-    ~EventReader(); 
+    ~EventAna(); 
   };
 }
-#endif // EventReader_H
+#endif // EventAna_H

@@ -1,27 +1,15 @@
-#include "XMuMuAnalysis/NanoAODAnalyzer/interface/EventReader.h"
+#include "XMuMuAnalysis/NanoAODAnalyzer/interface/EventAna.h"
 
 using namespace XMuMuAnalysis;
 
-EventReader::EventReader(TChain* t, bool mc, std::string era, bool isSig, bool d){
-  std::cout << "EventReader::EventReader()" << std::endl;
+EventAna::EventAna(TChain* t, bool mc, std::string era, bool isSig, bool d){
+  std::cout << "EventAna::EventAna()" << std::endl;
   tree     = t;
   isMC     = mc;
   eraName  = era;
   isSignal = isSig;
   debug    = d;
 
-  std::cout << "EventReader::EventReader() tree->LoadTree(0)" << std::endl;
-  tree->LoadTree(0);
-
-  InitBranch(tree, "run",             run);
-  InitBranch(tree, "luminosityBlock", lumiBlock);
-  InitBranch(tree, "event",           event);
-  InitBranch(tree, "PV_npvs",         nPVs);
-  InitBranch(tree, "PV_npvsGood",     nPVsGood);
-  InitBranch(tree, "genWeight",       genWeight);
-  //
-  //
-  //
   InitBranch(tree, "HLT_IsoMu24",   HLT_IsoMu24);
   InitBranch(tree, "HLT_IsoTkMu24", HLT_IsoTkMu24);
   InitBranch(tree, "HLT_IsoMu27",   HLT_IsoMu27);
@@ -44,14 +32,15 @@ EventReader::EventReader(TChain* t, bool mc, std::string era, bool isSig, bool d
   InitBranch(tree,"Flag_BadPFMuonFilter",                    Flag_BadPFMuonFilter);//2016
   InitBranch(tree,"Flag_eeBadScFilter",                      Flag_eeBadScFilter);//2016
 
-  std::cout << "EventReader::EventReader() Initialize objects" << std::endl;
-  
+  std::cout << "EventAna::EventAna() Initialize event reader" << std::endl;
+  readerEvent       = new EventReader(tree, isMC, eraName);
+
   //
   // Turn-off rochester corrections now
   // Seems that the analysis don't use this.
   //
+  std::cout << "EventAna::EventAna() Initialize object readers" << std::endl;
   bool doRoccorForMuons = false; 
-
   readerMuons       = new RecoMuonReader("Muon",        tree, isMC, eraName,doRoccorForMuons);
   readerJets        = new RecoJetReader("Jet",          tree, isMC, eraName);
   readerMET         = new RecoMETReader("MET",          tree, isMC, eraName);
@@ -60,7 +49,7 @@ EventReader::EventReader(TChain* t, bool mc, std::string era, bool isSig, bool d
     readerGenParticles = new GenParticleReader("GenPart",   tree);
   }
 } 
-bool EventReader::LoadEventFromTTree(int e)
+bool EventAna::LoadEventFromTTree(int e)
 {
   if(debug){
     std::cout<<"Get Entry "<<e<<std::endl;
@@ -78,13 +67,21 @@ bool EventReader::LoadEventFromTTree(int e)
   
   if(debug) std::cout<<"Got Entry "<<e<<std::endl;
   
-  if(debug) std::cout<<"Reset EventReader"<<std::endl;
-  
+  if(debug) std::cout<<"Reset EventAna"<<std::endl;
+
   recoMuons.clear();
   recoJets.clear();
   recoBJets.clear();
   recoLightJets.clear();
   trigObjectsMuon.clear();
+
+  run       =  0;
+  lumiBlock =  0;
+  event     =  0;
+  nPVs      =  0;
+  nPVsGood  =  0;
+  genWeight =  1.0;
+
 
   nRecoMuons = 0;
   muon0 = nullptr;
@@ -138,9 +135,19 @@ bool EventReader::LoadEventFromTTree(int e)
 
   return true;
 }
-bool EventReader::PassPreselection()
+bool EventAna::PassPreselection()
 {
   if(debug) std::cout<<"Do PassPreselection()"<<std::endl;
+  //
+  // Get
+  //
+  run = readerEvent->run;
+  lumiBlock = readerEvent->lumiBlock;
+  event = readerEvent->event;
+  nPVs = readerEvent->nPVs;
+  nPVsGood = readerEvent->nPVsGood;
+  genWeight = readerEvent->genWeight;
+  Pileup_nTrueInt = readerEvent->Pileup_nTrueInt;
   //
   // Must have at least one PV
   //
@@ -173,7 +180,7 @@ bool EventReader::PassPreselection()
   if(debug) std::cout<<"Done PassPreselection()"<<std::endl;
   return true;
 }
-bool EventReader::ConstructEventHypothesis()
+bool EventAna::ConstructEventHypothesis()
 {
   if(debug) std::cout<<"Do ConstructEventHypothesis()"<<std::endl;
   //################################################
@@ -364,4 +371,4 @@ bool EventReader::ConstructEventHypothesis()
 
   return true;
 }
-EventReader::~EventReader(){} 
+EventAna::~EventAna(){} 

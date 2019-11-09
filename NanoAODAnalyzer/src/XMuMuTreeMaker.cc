@@ -62,7 +62,7 @@ XMuMuTreeMaker::XMuMuTreeMaker(TChain* _events, TChain* _runs, TChain* _lumiBloc
     _lumi = 59740.57; //ipb
   }
 
-  eventReader = new XMuMuAnalysis::EventReader(eventsTree, isMC, eraName, isSignal,  debug);
+  eventAna = new XMuMuAnalysis::EventAna(eventsTree, isMC, eraName, isSignal,  debug);
   treeEvents  = eventsTree->GetEntries();
 } 
 void XMuMuTreeMaker::CreateNtupleTree(std::string fileName){
@@ -143,17 +143,17 @@ int XMuMuTreeMaker::EventLoop(int maxEvents){
     //
     // Load event from ttree
     //
-    passLoadEvent = eventReader->LoadEventFromTTree(e);
+    passLoadEvent = eventAna->LoadEventFromTTree(e);
     if(!passLoadEvent) continue;
     //
     // passPreselection
     //   
-    passPreselection = eventReader->PassPreselection();
+    passPreselection = eventAna->PassPreselection();
     if (!passPreselection) continue;
     //
     // passEventHypothesis
     //
-    passEventHypothesis = eventReader->ConstructEventHypothesis(); 
+    passEventHypothesis = eventAna->ConstructEventHypothesis(); 
     if (!passEventHypothesis) continue;
     //
     // passEvent
@@ -182,8 +182,8 @@ bool XMuMuTreeMaker::ProcessEvent(){
   // If MC
   //
   if(isMC){
-    eventReader->evtWeight = eventReader->genWeight * (_lumi * _xs * _kFactor / mcEventSumw);
-    if(debug) std::cout << "event->genWeight * (lumi * xs * kFactor / mcEventSumw) = " << eventReader->genWeight << " * (" << _lumi << " * " << _xs << " * " << _kFactor << " / " << mcEventSumw << ") = " << eventReader->evtWeight << std::endl;
+    eventAna->evtWeight = eventAna->genWeight * (_lumi * _xs * _kFactor / mcEventSumw);
+    if(debug) std::cout << "event->genWeight * (lumi * xs * kFactor / mcEventSumw) = " << eventAna->genWeight << " * (" << _lumi << " * " << _xs << " * " << _kFactor << " / " << mcEventSumw << ") = " << eventAna->evtWeight << std::endl;
     //
     // If its signal, just save all events
     //
@@ -191,7 +191,7 @@ bool XMuMuTreeMaker::ProcessEvent(){
       return true;
     }
     else{
-      if(!(eventReader->passMuMu)){
+      if(!(eventAna->passMuMu)){
         if(debug) std::cout << "Fail ProcessEvent: MC" << std::endl;
         return false;
       }
@@ -205,7 +205,7 @@ bool XMuMuTreeMaker::ProcessEvent(){
       if(debug) std::cout << "Fail lumiMask" << std::endl;
       return false;
     }
-    if(!(eventReader->passMuMu)){
+    if(!(eventAna->passMuMu)){
       if(debug) std::cout << "Fail ProcessEvent: data" << std::endl;
       return false;
     }
@@ -240,7 +240,7 @@ bool XMuMuTreeMaker::PassLumiMask(){
   if(_lumiMask.empty()) return true;
 
   //make lumiID run:lumiBlock
-  edm::LuminosityBlockID lumiID(eventReader->run, eventReader->lumiBlock);
+  edm::LuminosityBlockID lumiID(eventAna->run, eventAna->lumiBlock);
 
   //define function that checks if a lumiID is contained in a lumiBlockRange
   bool (*funcPtr) (edm::LuminosityBlockRange const &, edm::LuminosityBlockID const &) = &edm::contains;
@@ -251,60 +251,60 @@ bool XMuMuTreeMaker::PassLumiMask(){
   return _lumiMask.end() != iter; 
 }
 void XMuMuTreeMaker::FillNtupleVariables(){
-  b_run                       = eventReader->run;
-  b_lumiBlock                 = eventReader->lumiBlock;
-  b_event                     = eventReader->event;
+  b_run                       = eventAna->run;
+  b_lumiBlock                 = eventAna->lumiBlock;
+  b_event                     = eventAna->event;
   
-  b_nPVs                      = eventReader->nPVs;
-  b_nPVsGood                  = eventReader->nPVsGood;
+  b_nPVs                      = eventAna->nPVs;
+  b_nPVsGood                  = eventAna->nPVsGood;
   
   if(isMC){
     b_mcKFactor                 = _kFactor;
     b_mcXS                      = _xs;
-    b_mcGenWeight               = eventReader->genWeight;
+    b_mcGenWeight               = eventAna->genWeight;
   }
 
-  b_evtWeight                 = eventReader->evtWeight;
+  b_evtWeight                 = eventAna->evtWeight;
 
-  b_passMuMu                  = eventReader->passMuMu;
-  b_passMuMuTightIdIso        = eventReader->passMuMuTightIdIso;
-  b_passMuMuHighPtIdIso       = eventReader->passMuMuHighPtIdIso;
+  b_passMuMu                  = eventAna->passMuMu;
+  b_passMuMuTightIdIso        = eventAna->passMuMuTightIdIso;
+  b_passMuMuHighPtIdIso       = eventAna->passMuMuHighPtIdIso;
 
-  b_passTrigTightHLT          = eventReader->passTrigTightHLT;
-  b_passTrigHighPtHLT         = eventReader->passTrigHighPtHLT;
-  b_passTrigTightMatch        = eventReader->passTrigTightMatch;
-  b_passTrigHighPtMatch       = eventReader->passTrigHighPtMatch;
-  b_passTrigger               = eventReader->passTrigger;
+  b_passTrigTightHLT          = eventAna->passTrigTightHLT;
+  b_passTrigHighPtHLT         = eventAna->passTrigHighPtHLT;
+  b_passTrigTightMatch        = eventAna->passTrigTightMatch;
+  b_passTrigHighPtMatch       = eventAna->passTrigHighPtMatch;
+  b_passTrigger               = eventAna->passTrigger;
 
-  b_nRecoMuons                = eventReader->nRecoMuons;
+  b_nRecoMuons                = eventAna->nRecoMuons;
 
-  if (eventReader->passMuMu){
-    b_mumu_pt                 = eventReader->tlv_MuMu.Pt();
-    b_mumu_eta                = eventReader->tlv_MuMu.Eta();
-    b_mumu_phi                = eventReader->tlv_MuMu.Phi();
-    b_mumu_mass               = eventReader->tlv_MuMu.M();
+  if (eventAna->passMuMu){
+    b_mumu_pt                 = eventAna->tlv_MuMu.Pt();
+    b_mumu_eta                = eventAna->tlv_MuMu.Eta();
+    b_mumu_phi                = eventAna->tlv_MuMu.Phi();
+    b_mumu_mass               = eventAna->tlv_MuMu.M();
 
-    b_mumu_mu0pt              = eventReader->tlv_MuMu_Mu0.Pt();
-    b_mumu_mu0eta             = eventReader->tlv_MuMu_Mu0.Eta();
-    b_mumu_mu0phi             = eventReader->tlv_MuMu_Mu0.Phi();
-    b_mumu_mu0SF              = eventReader->mu0SF;
-    b_mumu_mu0IsTrigMatch     = eventReader->mu0IsTrigMatch;
+    b_mumu_mu0pt              = eventAna->tlv_MuMu_Mu0.Pt();
+    b_mumu_mu0eta             = eventAna->tlv_MuMu_Mu0.Eta();
+    b_mumu_mu0phi             = eventAna->tlv_MuMu_Mu0.Phi();
+    b_mumu_mu0SF              = eventAna->mu0SF;
+    b_mumu_mu0IsTrigMatch     = eventAna->mu0IsTrigMatch;
 
-    b_mumu_mu1pt              = eventReader->tlv_MuMu_Mu1.Pt();
-    b_mumu_mu1eta             = eventReader->tlv_MuMu_Mu1.Eta();
-    b_mumu_mu1phi             = eventReader->tlv_MuMu_Mu1.Phi();
-    b_mumu_mu1SF              = eventReader->mu1SF;
-    b_mumu_mu1IsTrigMatch     = eventReader->mu1IsTrigMatch;
+    b_mumu_mu1pt              = eventAna->tlv_MuMu_Mu1.Pt();
+    b_mumu_mu1eta             = eventAna->tlv_MuMu_Mu1.Eta();
+    b_mumu_mu1phi             = eventAna->tlv_MuMu_Mu1.Phi();
+    b_mumu_mu1SF              = eventAna->mu1SF;
+    b_mumu_mu1IsTrigMatch     = eventAna->mu1IsTrigMatch;
   }
   
-  b_nRecoJets              = eventReader->nRecoJets;
-  b_nRecoLightJets         = eventReader->nRecoLightJets;
-  b_nRecoBJets             = eventReader->nRecoBJets;
+  b_nRecoJets              = eventAna->nRecoJets;
+  b_nRecoLightJets         = eventAna->nRecoLightJets;
+  b_nRecoBJets             = eventAna->nRecoBJets;
   
-  b_MET_pt  = eventReader->MET_pt;
-  b_MET_phi = eventReader->MET_phi;
+  b_MET_pt  = eventAna->MET_pt;
+  b_MET_phi = eventAna->MET_phi;
 
-  b_passMETFilters            = eventReader->passMETFilters;
+  b_passMETFilters            = eventAna->passMETFilters;
 }
 void XMuMuTreeMaker::ResetNtupleVariables(){
 

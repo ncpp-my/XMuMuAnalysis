@@ -14,7 +14,7 @@
 #include "PhysicsTools/FWLite/interface/TFileService.h"
 
 #include "NanoAODAnalysis/NanoAODAnalyzer/interface/InitBranch.h"
-#include "XMuMuAnalysis/NanoAODAnalyzer/interface/EventReader.h"
+#include "XMuMuAnalysis/NanoAODAnalyzer/interface/EventAna.h"
 
 using namespace NanoAODAnalysis;
 using namespace XMuMuAnalysis;
@@ -49,7 +49,7 @@ namespace XMuMuAnalysis {
 
     bool isSignal = false;
 
-    XMuMuAnalysis::EventReader* eventReader;
+    XMuMuAnalysis::EventAna* eventAna;
   
     long int nEvents = 0;
     float  intLumi = 0;
