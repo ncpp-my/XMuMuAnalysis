@@ -64,8 +64,8 @@ class XMuMuNanoSkimmer(Module):
       #
       # Loose selection
       #
-      if mu.pt < 20. or abs(mu.eta) > 2.4: continue
-      if mu.looseId is False: continue
+      if mu.pt < 20. or abs(mu.eta) > 2.6: continue
+      if mu.looseId is False and mu.highPtId < 1: continue 
       muonsLoose.append(mu) 
     #
     # CHECK: AT LEAST 2 Loose muon.
@@ -84,6 +84,11 @@ XMuMuNanoSkimmer_2016_mc_sig   = lambda : XMuMuNanoSkimmer(isMC=True, era="2016"
 XMuMuNanoSkimmer_2016_mc_bkgd  = lambda : XMuMuNanoSkimmer(isMC=True, era="2016",doSkim=True) 
 XMuMuNanoSkimmer_2016_data     = lambda : XMuMuNanoSkimmer(isMC=False,era="2016",doSkim=True) 
 
+XMuMuNanoSkimmer_2017_mc_sig   = lambda : XMuMuNanoSkimmer(isMC=True, era="2017",doSkim=False) 
+XMuMuNanoSkimmer_2017_mc_bkgd  = lambda : XMuMuNanoSkimmer(isMC=True, era="2017",doSkim=True) 
+XMuMuNanoSkimmer_2017_data     = lambda : XMuMuNanoSkimmer(isMC=False,era="2017",doSkim=True) 
 
-
+XMuMuNanoSkimmer_2018_mc_sig   = lambda : XMuMuNanoSkimmer(isMC=True, era="2018",doSkim=False) 
+XMuMuNanoSkimmer_2018_mc_bkgd  = lambda : XMuMuNanoSkimmer(isMC=True, era="2018",doSkim=True) 
+XMuMuNanoSkimmer_2018_data     = lambda : XMuMuNanoSkimmer(isMC=False,era="2018",doSkim=True) 
 

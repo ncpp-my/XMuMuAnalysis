@@ -12,6 +12,15 @@ from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSki
 from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_mc_bkgd
 from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_data   
 
+from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_mc_sig 
+from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_mc_bkgd
+from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_data   
+
+from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_mc_sig 
+from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_mc_bkgd
+from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_data   
+
+
 print "args are: ",sys.argv
 
 isMC = True
@@ -47,6 +56,22 @@ if era == "2016":
       modules=[XMuMuNanoSkimmer_2016_mc_bkgd()]
   else:              
     modules=[XMuMuNanoSkimmer_2016_data()]
+elif era == "2017":
+  if isMC: 
+    if isSig: 
+      modules=[XMuMuNanoSkimmer_2017_mc_sig()]
+    else:     
+      modules=[XMuMuNanoSkimmer_2017_mc_bkgd()]
+  else:              
+    modules=[XMuMuNanoSkimmer_2017_data()]
+elif era == "2018":
+  if isMC: 
+    if isSig: 
+      modules=[XMuMuNanoSkimmer_2018_mc_sig()]
+    else:     
+      modules=[XMuMuNanoSkimmer_2018_mc_bkgd()]
+  else:              
+    modules=[XMuMuNanoSkimmer_2018_data()]
 
 
 # 
