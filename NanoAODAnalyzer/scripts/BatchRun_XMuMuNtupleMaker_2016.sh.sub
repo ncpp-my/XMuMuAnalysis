@@ -9,14 +9,13 @@ stream_error  = True
 +JobFlavour   = "longlunch"
 arguments = $(SAMPLE) $(SAMPLEXSEC) ProcNanoAODSkim_MC2016_cfg.py
 queue SAMPLE SAMPLEXSEC CFG from ( 
-MC16_DYLL              MC16_DYLL              
+MC16_DYLL              MC16_DYLL
+MC16_TT_2L_PW             MC16_TT_2L_PW            
 )
 
 +JobFlavour   = "microcentury"
 arguments = $(SAMPLE) $(SAMPLEXSEC) ProcNanoAODSkim_MC2016_cfg.py
 queue SAMPLE SAMPLEXSEC CFG from ( 
-MC16_TT_2L                MC16_TT_2L
-MC16_TT_2L_PW             MC16_TT_2L_PW
 MC16_TT_1L_PW             MC16_TT_1L_PW
 MC16_ST_tW_antitop        MC16_ST_tW_antitop
 MC16_ST_tW_top            MC16_ST_tW_top

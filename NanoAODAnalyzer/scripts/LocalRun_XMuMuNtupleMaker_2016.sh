@@ -1,8 +1,14 @@
 #!/bin/bash
 
 SAMPLES=(
-"MC16_TTJets_DiLept"
-"MC16_TT_2L"
+"MC16_DYLL" 
+"MC16_TT_2L_PW"         
+"MC16_TT_1L_PW"
+"MC16_ST_s-chan"
+"MC16_ST_t-chan_antitop"
+"MC16_ST_t-chan_top"
+"MC16_ST_tW_antitop"
+"MC16_ST_tW_top"
 "MC16_WZTo2L2Q"
 "MC16_ZZTo2L2Q"
 "MC16_ZZTo2L2Nu"
