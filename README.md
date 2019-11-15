@@ -50,7 +50,11 @@ cmsenv
 
 ### 5. Change path to output
 
-You should specify the path to the directory where you want to store your output in ([ProcNanoAODSkim_Common.py](NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py)) at this [line](https://github.com/ncpp-my/XMuMuAnalysis/blob/b7fb85a5e58192e9ca41714b2239fe83c77a0112/NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py#L4).
+You should specify the path to the directory where you want to store your output in ([ProcNanoAODSkim_Common.py](NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py)) at the following [line](https://github.com/ncpp-my/XMuMuAnalysis/blob/b7fb85a5e58192e9ca41714b2239fe83c77a0112/NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py#L4):
+
+```python
+outputListDir         = "root://eosuser.cern.ch//eos/user/n/nbinnorj/XMuMuAna/Ntuples/"
+```
 
 ## Run jobs locally
 
