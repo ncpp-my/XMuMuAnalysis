@@ -32,7 +32,7 @@ process.inputs.lumisToProcess.extend(lumiList)
 process.ProcessNanoAOD_XMuMu = cms.PSet(
   debug            = cms.bool(debug),
   maxEvents        = cms.int32(int(nevents)),
-  inputListDir     = cms.string(inputListDir),
+  inputListDir     = cms.string(inputListDir_2016),
   outputListDir    = cms.string(outputListDir),
   era              = cms.string(era),
   blind            = cms.bool(True),

@@ -8,7 +8,7 @@ from ProcNanoAODSkim_Common import *
 #
 # Basic Configuration
 #
-era              = "2016"
+era              = "2017"
 debug            = False
 nevents          = -1
 #
