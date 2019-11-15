@@ -40,13 +40,21 @@ int main(int argc, char * argv[])
     return 0;
   }
 
+  char* CMSSW_BASE;
+  CMSSW_BASE = getenv ("CMSSW_BASE");
+  std::string CMSSW_DIR = "";
+  CMSSW_DIR = CMSSW_BASE + std::string("/src/");
+
+  std::string cfgFile = "";
+  cfgFile = CMSSW_DIR + std::string(argv[1]);
+
   //
   // get the python configuration
   //
-  if( !edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process") ){
+  if( !edm::readPSetsFrom(cfgFile)->existsAs<edm::ParameterSet>("process") ){
     std::cout << " ERROR: ParametersSet 'process' is missing in your configuration file" << std::endl; exit(0);
   }  
-  const edm::ParameterSet& process    = edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
+  const edm::ParameterSet& process    = edm::readPSetsFrom(cfgFile)->getParameter<edm::ParameterSet>("process");
   //
   //
   //
@@ -142,34 +150,46 @@ int main(int argc, char * argv[])
 }
 
 float GetMCXS(std::string sampleName){
+
   //
   // Cross-sections should be in picobarn (pb)
   //
-  std::unordered_map<std::string, float> m_sampleXS;   
-  //https://github.com/jkarancs/B2GTTrees/blob/cdc6ee2e2423ae3e3b67c5291ae25fdd2d42c4de/test/crab3/cross_sections.txt#L133
-  m_sampleXS["MC16_DYLL"] = 4895;      
-  //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO#Top_quark_pair_cross_sections_at  
-  //BR for W-boson from PDG(2018)
-  m_sampleXS["MC16_TT_2L"]    = 831.76*(3*0.1086)*(3*0.1086);   
-  m_sampleXS["MC16_TT_2L_PW"] = 831.76*(3*0.1086)*(3*0.1086);              
-  m_sampleXS["MC16_TT_1L_PW"] = 831.76*2*(3*0.1086*0.6741); 
-  //https://cms-gen-dev.cern.ch/xsdb/?searchQuery=DAS=ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1
-  //https://cms-gen-dev.cern.ch/xsdb/?searchQuery=DAS=ST_tW_top_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1
-  m_sampleXS["MC16_ST_tW_antitop"]            = 38.06;
-  m_sampleXS["MC16_ST_tW_top"]                = 38.09;
-  //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec#Single_top_t_channel_cross_secti
-  m_sampleXS["MC16_ST_t-channel_antitop"]     = 80.95;
-  m_sampleXS["MC16_ST_t-channel_top"]         = 136.02;
-  //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec#Single_top_s_channel_cross_secti
-  m_sampleXS["MC16_ST_s-channel"]             = 10.32*(3*0.1086);
-  //https://github.com/jkarancs/B2GTTrees/blob/master/test/crab3/cross_sections.txt
-  //https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns
-  m_sampleXS["MC16_WZTo2L2Q"]     = 5.595; 
-  m_sampleXS["MC16_ZZTo2L2Q"]     = 3.22;
-  m_sampleXS["MC16_WWTo2L2Nu"]    = 12.178;
-  m_sampleXS["MC16_WZTo3LNu"]     = 4.430; 
-  m_sampleXS["MC16_ZZTo2L2Nu"]    = 0.564;
-  m_sampleXS["MC16_ZZTo4L"]       = 1.212;
+  std::unordered_map<std::string, float> m_sampleXS;  
+  
+  std::vector<std::string> years;
+  years.push_back("MC16");
+  // years.push_back("MC17");
+  // years.push_back("MC18");
+
+  for (unsigned int i=0; i< years.size(); i++)
+  {
+    std::string year = years.at(i);
+ 
+    //https://github.com/jkarancs/B2GTTrees/blob/cdc6ee2e2423ae3e3b67c5291ae25fdd2d42c4de/test/crab3/cross_sections.txt#L133
+    m_sampleXS[year+"_DYLL"] = 4895;      
+    //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO#Top_quark_pair_cross_sections_at  
+    //BR for W-boson from PDG(2018)
+    m_sampleXS[year+"_TT_2L"]    = 831.76*(3*0.1086)*(3*0.1086);   
+    m_sampleXS[year+"_TT_2L_PW"] = 831.76*(3*0.1086)*(3*0.1086);              
+    m_sampleXS[year+"_TT_1L_PW"] = 831.76*2*(3*0.1086*0.6741); 
+    //https://cms-gen-dev.cern.ch/xsdb/?searchQuery=DAS=ST_tW_antitop_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1
+    //https://cms-gen-dev.cern.ch/xsdb/?searchQuery=DAS=ST_tW_top_5f_NoFullyHadronicDecays_13TeV-powheg_TuneCUETP8M1
+    m_sampleXS[year+"_ST_tW_antitop"]            = 38.06;
+    m_sampleXS[year+"_ST_tW_top"]                = 38.09;
+    //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec#Single_top_t_channel_cross_secti
+    m_sampleXS[year+"_ST_t-channel_antitop"]     = 80.95;
+    m_sampleXS[year+"_ST_t-channel_top"]         = 136.02;
+    //https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec#Single_top_s_channel_cross_secti
+    m_sampleXS[year+"_ST_s-channel"]             = 10.32*(3*0.1086);
+    //https://github.com/jkarancs/B2GTTrees/blob/master/test/crab3/cross_sections.txt
+    //https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns
+    m_sampleXS[year+"_WZTo2L2Q"]     = 5.595; 
+    m_sampleXS[year+"_ZZTo2L2Q"]     = 3.22;
+    m_sampleXS[year+"_WWTo2L2Nu"]    = 12.178;
+    m_sampleXS[year+"_WZTo3LNu"]     = 4.430; 
+    m_sampleXS[year+"_ZZTo2L2Nu"]    = 0.564;
+    m_sampleXS[year+"_ZZTo4L"]       = 1.212;
+  }
 
   float xsec = 1.0;
   if ( m_sampleXS.find(sampleName) == m_sampleXS.end() ) {
