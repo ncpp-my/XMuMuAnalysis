@@ -50,7 +50,7 @@ cmsenv
 
 ### 5. Change path to output
 
-You should specify the path to the directory where you want to store your output in ([ProcNanoAODSkim_Common.py](NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py)) at this[line](https://github.com/ncpp-my/XMuMuAnalysis/blob/b7fb85a5e58192e9ca41714b2239fe83c77a0112/NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py#L4).
+You should specify the path to the directory where you want to store your output in ([ProcNanoAODSkim_Common.py](NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py)) at this [line](https://github.com/ncpp-my/XMuMuAnalysis/blob/b7fb85a5e58192e9ca41714b2239fe83c77a0112/NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py#L4).
 
 ## Run jobs locally
 
@@ -84,7 +84,7 @@ Make a directory to store the batch logs from the jobs.
 ```bash
 mdkir BatchLog
 cd BatchLog
-ln -s ./XMuMuAnalysis/NanoAODAnalyzer/scripts/CheckJobStatus.py
+ln -s ../XMuMuAnalysis/NanoAODAnalyzer/scripts/CheckJobStatus.py
 cd ${CMSSW_BASE}/src
 ```
 
