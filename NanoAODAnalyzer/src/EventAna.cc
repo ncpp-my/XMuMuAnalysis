@@ -16,6 +16,8 @@ EventAna::EventAna(TChain* t, bool mc, std::string era, bool isSig, bool d){
   InitBranch(tree, "HLT_IsoTkMu27", HLT_IsoTkMu27);
   InitBranch(tree, "HLT_Mu50",      HLT_Mu50);
   InitBranch(tree, "HLT_TkMu50",    HLT_TkMu50);
+  InitBranch(tree, "HLT_OldMu100",  HLT_OldMu100);//
+  InitBranch(tree, "HLT_TkMu100",   HLT_TkMu100);//
   //
   //
   // https://twiki.cern.ch/twiki/bin/view/CMS/MissingETOptionalFiltersRun2#2018_data
@@ -24,13 +26,13 @@ EventAna::EventAna(TChain* t, bool mc, std::string era, bool isSig, bool d){
   //
   //
   // 
-  InitBranch(tree,"Flag_goodVertices",                       Flag_goodVertices);//2016
-  InitBranch(tree,"Flag_globalSuperTightHalo2016Filter",     Flag_globalSuperTightHalo2016Filter);//2016
-  InitBranch(tree,"Flag_HBHENoiseFilter",                    Flag_HBHENoiseFilter);//2016
-  InitBranch(tree,"Flag_HBHENoiseIsoFilter",                 Flag_HBHENoiseIsoFilter);//2016
-  InitBranch(tree,"Flag_EcalDeadCellTriggerPrimitiveFilter", Flag_EcalDeadCellTriggerPrimitiveFilter);//2016
-  InitBranch(tree,"Flag_BadPFMuonFilter",                    Flag_BadPFMuonFilter);//2016
-  InitBranch(tree,"Flag_eeBadScFilter",                      Flag_eeBadScFilter);//2016
+  InitBranch(tree,"Flag_goodVertices",                       Flag_goodVertices);//2016,2017
+  InitBranch(tree,"Flag_globalSuperTightHalo2016Filter",     Flag_globalSuperTightHalo2016Filter);//2016,2017
+  InitBranch(tree,"Flag_HBHENoiseFilter",                    Flag_HBHENoiseFilter);//2016,2017
+  InitBranch(tree,"Flag_HBHENoiseIsoFilter",                 Flag_HBHENoiseIsoFilter);//2016,2017
+  InitBranch(tree,"Flag_EcalDeadCellTriggerPrimitiveFilter", Flag_EcalDeadCellTriggerPrimitiveFilter);//2016,2017
+  InitBranch(tree,"Flag_BadPFMuonFilter",                    Flag_BadPFMuonFilter);//2016,2017
+  InitBranch(tree,"Flag_eeBadScFilter",                      Flag_eeBadScFilter);//2016,2017
 
   std::cout << "EventAna::EventAna() Initialize event reader" << std::endl;
   readerEvent       = new EventReader(tree, isMC, eraName);
@@ -71,8 +73,9 @@ bool EventAna::LoadEventFromTTree(int e)
 
   recoMuons.clear();
   recoJets.clear();
-  recoBJets.clear();
-  recoLightJets.clear();
+  signalJets.clear();
+  signalBJets.clear();
+  signalLightJets.clear();
   trigObjectsMuon.clear();
 
   run       =  0;
@@ -101,9 +104,10 @@ bool EventAna::LoadEventFromTTree(int e)
   mu0IsTrigMatch = false;
   mu1IsTrigMatch = false;
 
-  nRecoJets  = 0;
-  nRecoBJets = 0;
-  nRecoLightJets = 0;
+  nRecoJets = 0;
+  nSignalJets = 0;
+  nSignalBJets = 0;
+  nSignalLightJets = 0;
 
   passPreselTriggers = false;
   passPreselMuons  = false;
@@ -335,19 +339,41 @@ bool EventAna::ConstructEventHypothesis()
   //
   recoJets  = readerJets->SelectRecoJetsLepCleaned(recoJets,mu0RecoJetIdx,mu1RecoJetIdx);
   nRecoJets = recoJets.size();
+
+  //##############################################################
+  // Small-R jets
+  //##############################################################
+  bool isSignalJet  = false;
+  bool passJetID    = false;
+
+  for (unsigned int i = 0; i < nRecoJets; i++)
+  {
+    RecoJetPtr jet = recoJets.at(i);
+    passJetID   = jet->jetId & 1;
+    if(eraName=="2016"){
+      passJetID   = jet->jetId&1;
+    }else{
+      passJetID   = jet->jetId&2;
+    }
+    // Check if it is central jet
+    isSignalJet = passJetID; // passID
+    if(isSignalJet) signalJets.push_back(jet);
+  }
+  nSignalJets  = signalJets.size();
+
   //
   // Get b-jets and light-jets
   //
-  for (unsigned int i=0; i < nRecoJets; i++){
-    RecoJetPtr jet = recoJets.at(i);
+  for (unsigned int i=0; i < nSignalJets; i++){
+    RecoJetPtr jet = signalJets.at(i);
     if(jet->CSVv2 > jetCSVv2Cut){
-      recoBJets.push_back(jet);
+      signalBJets.push_back(jet);
     }else{
-      recoLightJets.push_back(jet);
+      signalLightJets.push_back(jet);
     }
   }
-  nRecoBJets     = recoBJets.size();
-  nRecoLightJets = recoLightJets.size();
+  nSignalBJets     = signalBJets.size();
+  nSignalLightJets = signalLightJets.size();
   //##############################################################
   //
   // Get MET variables
@@ -366,7 +392,20 @@ bool EventAna::ConstructEventHypothesis()
     passMETFilters &= Flag_HBHENoiseIsoFilter;
     passMETFilters &= Flag_EcalDeadCellTriggerPrimitiveFilter;
     passMETFilters &= Flag_BadPFMuonFilter;
-    passMETFilters &= Flag_eeBadScFilter;
+    if(!isMC){
+      passMETFilters &= Flag_eeBadScFilter;
+    }
+  }
+  else if(eraName=="2017"){
+    passMETFilters &= Flag_goodVertices;
+    passMETFilters &= Flag_globalSuperTightHalo2016Filter;
+    passMETFilters &= Flag_HBHENoiseFilter;
+    passMETFilters &= Flag_HBHENoiseIsoFilter;
+    passMETFilters &= Flag_EcalDeadCellTriggerPrimitiveFilter;
+    passMETFilters &= Flag_BadPFMuonFilter;
+    if(!isMC){
+      passMETFilters &= Flag_eeBadScFilter;
+    }
   }
 
   return true;

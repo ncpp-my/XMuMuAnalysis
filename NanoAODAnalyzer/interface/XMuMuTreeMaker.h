@@ -121,9 +121,9 @@ namespace XMuMuAnalysis {
     Float_t   b_mumu_mu1SF;
     Bool_t    b_mumu_mu1IsTrigMatch;
 
-    Int_t     b_nRecoJets;  
-    Int_t     b_nRecoLightJets;  
-    Int_t     b_nRecoBJets;  
+    Int_t     b_nSignalJets;  
+    Int_t     b_nSignalLightJets;  
+    Int_t     b_nSignalBJets;  
 
     Float_t   b_MET_pt;
     Float_t   b_MET_phi;

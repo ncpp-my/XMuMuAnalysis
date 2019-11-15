@@ -49,8 +49,9 @@ namespace XMuMuAnalysis {
 
     std::vector< RecoMuonPtr >     recoMuons;
     std::vector< RecoJetPtr >      recoJets;
-    std::vector< RecoJetPtr >      recoBJets;
-    std::vector< RecoJetPtr >      recoLightJets;
+    std::vector< RecoJetPtr >      signalJets;
+    std::vector< RecoJetPtr >      signalBJets;
+    std::vector< RecoJetPtr >      signalLightJets;
     std::vector< TrigObjectPtr >   trigObjectsMuon;
 
     unsigned int nRecoMuons = 0;
@@ -71,9 +72,10 @@ namespace XMuMuAnalysis {
     bool mu0IsTrigMatch = false;
     bool mu1IsTrigMatch = false;
 
-    unsigned int nRecoJets  = 0;
-    unsigned int nRecoBJets = 0;
-    unsigned int nRecoLightJets = 0;
+    unsigned int nRecoJets = 0;
+    unsigned int nSignalJets = 0;
+    unsigned int nSignalBJets = 0;
+    unsigned int nSignalLightJets = 0;
 
     bool passPreselTriggers = false;
     bool passPreselMuons    = false;
@@ -94,6 +96,8 @@ namespace XMuMuAnalysis {
     bool HLT_IsoTkMu27 = false;
     bool HLT_Mu50   = false;
     bool HLT_TkMu50 = false;
+    bool HLT_OldMu100 = false;
+    bool HLT_TkMu100 = false;
 
     bool Flag_goodVertices = false;
     bool Flag_globalSuperTightHalo2016Filter = false;

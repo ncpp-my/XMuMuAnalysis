@@ -56,10 +56,10 @@ XMuMuTreeMaker::XMuMuTreeMaker(TChain* _events, TChain* _runs, TChain* _lumiBloc
   }
   //
   // brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -i
-  // /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -i /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt
+  // /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt
   //
   else if(eraName == "2018"){
-    _lumi = 59740.57; //ipb
+    _lumi = 59740.00; //ipb. NOTE:FIKRI: Taken from twiki. Should run brilcalc to get the exact value
   }
 
   eventAna = new XMuMuAnalysis::EventAna(eventsTree, isMC, eraName, isSignal,  debug);
@@ -104,9 +104,9 @@ void XMuMuTreeMaker::CreateNtupleTree(std::string fileName){
   ntupleTree->Branch("mumu_mu1phi",             &b_mumu_mu1phi,          "mumu_mu1phi/F");
   ntupleTree->Branch("mumu_mu1SF",              &b_mumu_mu1SF,           "mumu_mu1SF/F");
   ntupleTree->Branch("mumu_mu1IsTrigMatch",     &b_mumu_mu1IsTrigMatch,  "mumu_mu1IsTrigMatch/O");
-  ntupleTree->Branch("nRecoJets",               &b_nRecoJets,            "nRecoJets/I");
-  ntupleTree->Branch("nRecoBJets",              &b_nRecoBJets,           "nRecoBJets/I");
-  ntupleTree->Branch("nRecoLightJets",          &b_nRecoLightJets,       "nRecoLightJets/I");
+  ntupleTree->Branch("nSignalJets",             &b_nSignalJets,          "nSignalJets/I");
+  ntupleTree->Branch("nSignalBJets",            &b_nSignalBJets,         "nSignalBJets/I");
+  ntupleTree->Branch("nSignalLightJets",        &b_nSignalLightJets,     "nSignalLightJets/I");
   ntupleTree->Branch("MET_pt",                  &b_MET_pt,               "MET_pt/F");
   ntupleTree->Branch("MET_phi",                 &b_MET_phi,              "MET_phi/F");
   ntupleTree->Branch("passMETFilters",          &b_passMETFilters,       "passMETFilters/O");
@@ -297,9 +297,9 @@ void XMuMuTreeMaker::FillNtupleVariables(){
     b_mumu_mu1IsTrigMatch     = eventAna->mu1IsTrigMatch;
   }
   
-  b_nRecoJets              = eventAna->nRecoJets;
-  b_nRecoLightJets         = eventAna->nRecoLightJets;
-  b_nRecoBJets             = eventAna->nRecoBJets;
+  b_nSignalJets              = eventAna->nSignalJets;
+  b_nSignalLightJets         = eventAna->nSignalLightJets;
+  b_nSignalBJets             = eventAna->nSignalBJets;
   
   b_MET_pt  = eventAna->MET_pt;
   b_MET_phi = eventAna->MET_phi;
@@ -351,9 +351,9 @@ void XMuMuTreeMaker::ResetNtupleVariables(){
   b_mumu_mu1SF = 1.0;
   b_mumu_mu1IsTrigMatch = false;
 
-  b_nRecoJets = -9;
-  b_nRecoLightJets = -9;
-  b_nRecoBJets = -9;
+  b_nSignalJets = -9;
+  b_nSignalLightJets = -9;
+  b_nSignalBJets = -9;
 
   b_MET_pt = -99.;
   b_MET_phi = -99.;
