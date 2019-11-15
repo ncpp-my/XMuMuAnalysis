@@ -44,6 +44,65 @@ Instruction from to https://github.com/cms-nanoAOD/nanoAOD-tools#checkout-instru
 ### 4. Compile
 
 ```bash
-scram b -j 4
+scram b -j4
 cmsenv
 ```
+
+### 5. Change path to output
+
+You should specify the path to the directory where you want to store your output in this file ([NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py](ProcNanoAODSkim_Common.py))
+
+https://github.com/ncpp-my/XMuMuAnalysis/blob/b7fb85a5e58192e9ca41714b2239fe83c77a0112/NanoAODAnalyzer/scripts/ProcNanoAODSkim_Common.py#L4
+
+
+## Run jobs locally
+
+### 1. Setup
+
+```bash
+ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/LocalRun_XMuMuNtupleMaker_2016.sh . 
+```
+
+### 2. Run the bash script
+
+```bash
+source ./LocalRun_XMuMuNtupleMaker_2016.sh
+```
+
+## Sending jobs to the batch farm
+
+This is for running the NtupleMaker on the batch farm.
+
+### 1. Setup
+
+Make a symlink of the source file (.sh) and its submission file (.sh.sub) in the main source code directory.
+
+```bash
+cd ${CMSSW_BASE}/src
+ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/BatchRun_XMuMuNtupleMaker_2016.sh.sub .
+ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/LocalRun_XMuMuNtupleMaker_2016.sh . 
+```
+Make a directory to store the batch logs from the jobs.
+
+```bash
+mdkir BatchLog
+cd BatchLog
+ln -s ./XMuMuAnalysis/NanoAODAnalyzer/scripts/CheckJobStatus.py
+cd ${CMSSW_BASE}/src
+```
+
+### 2. Send the job
+
+```bash
+scram b -j4
+cmsenv
+condor_submit ./BatchRun_XMuMuNtupleMaker_2016.sh.sub
+```
+
+### 3. To check the status of the jobs
+
+```bash
+cd BatchLog
+python CheckJobStatus.py
+```
+

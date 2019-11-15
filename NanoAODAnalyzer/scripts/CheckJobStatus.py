@@ -13,7 +13,7 @@ for fileName in allOutFile:
 
 
   lines = file.read()
-  if "ProcessNanoAOD_XZVllqq::DONE" in lines:
+  if "ProcessNanoAOD_XMuMu::DONE" in lines:
     jobsDone.append(fileName)
   else:
     jobsNotDone.append(fileName)
