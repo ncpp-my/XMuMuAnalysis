@@ -1,18 +1,18 @@
 import sys
 import crab_common 
 
-crab_common.config.General.requestName = 'XMuMuPostNanoData16_'+crab_common.version
+crab_common.config.General.requestName = 'XMuMuPostNanoData18_'+crab_common.version
 
 crab_common.config.JobType.maxJobRuntimeMin = 450
 
 crab_common.config.JobType.scriptArgs = [
 'isMC=0',
 'isSig=0',
-'era=2016',
+'era=2018',
 ]
 
-crab_common.config.Data.inputDataset     = '/SingleMuon/Run2016B_ver1-Nano1June2019_ver1-v1/NANOAOD' #Dummy
-crab_common.config.Data.outputDatasetTag = 'XMuMuPostNanoData16_'+crab_common.version #Dummy
+crab_common.config.Data.inputDataset     = '/SingleMuon/Run2018B_ver1-Nano1June2019_ver1-v1/NANOAOD' #Dummy
+crab_common.config.Data.outputDatasetTag = 'XMuMuPostNanoData8_'+crab_common.version #Dummy
 
 if __name__ == '__main__':
   #
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     #
     primaryName   = dataset.split('/')[1]
     secondaryName = dataset.split('/')[2]
-    secondaryName = secondaryName.replace("Nano1June2019","Data16NanoAODv5") #CHECK
+    secondaryName = secondaryName.replace("Nano1June2019","Data18NanoAODv5") #CHECK
     #
     requestName = primaryName + "_" + secondaryName
     requestName = "XMM_" + requestName + "_" + crab_common.version

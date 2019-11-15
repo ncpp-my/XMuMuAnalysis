@@ -1,18 +1,18 @@
 import sys
-import crab_common 
+import crab_common
 
-crab_common.config.General.requestName = 'XMuMuPostNanoMC16_'+crab_common.version
+crab_common.config.General.requestName = 'XMuMuPostNanoMC18_'+crab_common.version
 
-crab_common.config.JobType.maxJobRuntimeMin = 300
+crab_common.config.JobType.maxJobRuntimeMin = 60
 
 crab_common.config.JobType.scriptArgs = [
 'isMC=1',
-'isSig=0',
-'era=2016',
+'isSig=1',
+'era=2018',
 ]
 
-crab_common.config.Data.inputDataset     = '/WprimeToWZToWhadZlep_width0p1_M-800_TuneCUETP8M1_13TeV-madgraph-pythia8/RunIISummer16NanoAODv5-PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM' #Dummy
-crab_common.config.Data.outputDatasetTag = 'XMuMuPostNanoMC16_Test_'+crab_common.version  # Dummy
+crab_common.config.Data.inputDataset     = '/WprimeToWZToWhadZlep_width0p1_M-800_TuneCUETP8M1_13TeV-madgraph-pythia8/RunIISummer18NanoAODv5-PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM' #Dummy
+crab_common.config.Data.outputDatasetTag = 'XMuMuPostNanoMC17_Test_'+crab_common.version  # Dummy
 
 if __name__ == '__main__':
   #
@@ -37,10 +37,10 @@ if __name__ == '__main__':
     primaryName   = dataset.split('/')[1].split("_")[0:3]
     primaryName   = "_".join(primaryName)
     secondaryName = dataset.split('/')[2]
-    secondaryName = secondaryName.replace("RunIISummer16NanoAODv5","MC16NanoAODv5")#CHECK
+    secondaryName = secondaryName.replace("RunIIFall17NanoAODv5-PU2017_12Apr2018","MC17NanoAODv5")#CHECK
     secondaryName = secondaryName.replace("Nano1June2019_","")#CHECK
     #
-    requestName = primaryName + "_" + secondaryName.replace("PUMoriond17_102X_mcRun2_asymptotic_v7","")#CHECK
+    requestName = primaryName + "_" + secondaryName.replace("102X_mc2017_realistic_v7-v1","")#CHECK
     requestName = "XZV_" + requestName + "_" + crab_common.version
     crab_common.config.General.requestName   = requestName
     #  
