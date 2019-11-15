@@ -77,7 +77,7 @@ Make a symlink of the source file (.sh) and its submission file (.sh.sub) in the
 ```bash
 cd ${CMSSW_BASE}/src
 ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/BatchRun_XMuMuNtupleMaker_2016.sh.sub .
-ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/LocalRun_XMuMuNtupleMaker_2016.sh . 
+ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/BatchRun_XMuMuNtupleMaker_2016.sh . 
 ```
 Make a directory to store the batch logs from the jobs.
 
