@@ -82,13 +82,14 @@ ln -s XMuMuAnalysis/NanoAODAnalyzer/scripts/BatchRun_XMuMuNtupleMaker_2016.sh .
 Make a directory to store the batch logs from the jobs.
 
 ```bash
-mdkir BatchLog
+mkdir BatchLog
 cd BatchLog
 ln -s ../XMuMuAnalysis/NanoAODAnalyzer/scripts/CheckJobStatus.py
 cd ${CMSSW_BASE}/src
 ```
 
 ### 2. Send the job
+Its always good practice to compile and run ```cmsenv``` before sending jobs to lxplus's HTCondor batch farm.
 
 ```bash
 scram b -j4
