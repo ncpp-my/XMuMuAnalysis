@@ -8,18 +8,18 @@ import argparse
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import * 
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_mc_sig 
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_mc_bkgd
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_data   
 
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_mc_sig 
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_mc_bkgd
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_data   
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_mc_sig 
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_mc_bkgd
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2016_data   
 
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_mc_sig 
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_mc_bkgd
-from XMuMuAnalysis.NanoAODAnalyzer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_data   
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_mc_sig 
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_mc_bkgd
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2017_data   
 
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_mc_sig 
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_mc_bkgd
+from XMuMuAnalysis.NanoAODSkimmer.postproc.XMuMuNanoSkimmer import XMuMuNanoSkimmer_2018_data   
 
 print "args are: ",sys.argv
 
